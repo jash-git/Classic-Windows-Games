@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<!-- saved from url=(0039)https://falcon.pixnet.net/ad/embed/3382 -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><script type="text/javascript" async="" src="./publishertag.prebid.123.js.下載"></script>
+<title></title>
+
+<script type="text/javascript" src="./jquery.min.js.下載"></script>
+<link rel="stylesheet" href="./reset.css" type="text/css">
+<!--<base target="_blank">--><base href="." target="_blank">
+<meta http-equiv="origin-trial" content="A/vXSuiuvzsL+Db89QNS/YzqK5Wmzx9oASGHZVMjcaWfVdbB6eUJrJGNr7uhrsmiGhryVjVALd72agYzELDTMAgAAACAeyJvcmlnaW4iOiJodHRwczovL2NyaXRlby5uZXQ6NDQzIiwiZmVhdHVyZSI6IlByaXZhY3lTYW5kYm94QWRzQVBJcyIsImV4cGlyeSI6MTY2OTc2NjM5OSwiaXNTdWJkb21haW4iOnRydWUsImlzVGhpcmRQYXJ0eSI6dHJ1ZX0="><meta http-equiv="origin-trial" content="A0KGawWMfAygakxUO+Z3rulPwK2j0AqkLneiEt4pAI951GYaafeHNV9Ya+PAn7s0y12QSrfTjc9LdOUU+QfkdQwAAACAeyJvcmlnaW4iOiJodHRwczovL2NyaXRlby5jb206NDQzIiwiZmVhdHVyZSI6IlByaXZhY3lTYW5kYm94QWRzQVBJcyIsImV4cGlyeSI6MTY2OTc2NjM5OSwiaXNTdWJkb21haW4iOnRydWUsImlzVGhpcmRQYXJ0eSI6dHJ1ZX0="></head>
+<body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0" style="background:transparent">
+<div id="pixad3382d2"></div>
+<script src="./prebid.js.下載" async=""></script>
+<script>
+var pbjs = pbjs || {};
+pbjs.que = pbjs.que || [],
+(function (config) {
+var pbjs = window.pbjs,
+code = config.code,
+adUnitSizes = config.adUnitSizes,
+adUnits = [{
+code: code,
+mediaTypes: {
+banner: {
+sizes: adUnitSizes
+}
+},
+bids: config.bids
+}],
+bidsBackHandler = function () {
+bidsBackHandler = function () {};
+var iframe = document.getElementById(code + '_frame'),
+iframeDoc = iframe.contentWindow.document;
+params = pbjs.getAdserverTargetingForAdUnitCode(code);
+iframeDoc.open('text/html', 'replace');
+if (params && params.hb_adid && params.hb_pb && params.hb_pb > config.rp) {
+pbjs.renderAd(iframeDoc, params.hb_adid);
+} else {
+iframe.width = adUnitSizes[0][0];
+iframe.height = adUnitSizes[0][1];
+iframeDoc.write(config.snippet);
+iframeDoc.close();
+}
+iframe.id += '_registed';
+};
+pbjs.que.push(function() {
+pbjs.setConfig({
+bidderTimeout: config.bidderTimeout,
+priceGranularity: config.priceGranularity
+});
+pbjs.requestBids({
+bidsBackHandler: bidsBackHandler,
+adUnits: adUnits
+});
+});
+})({
+bidderTimeout: 1800,
+priceGranularity: {
+buckets: [{
+min: 0.00,
+max: 999.00,
+increment: 0.01
+}]
+},
+code: 'scupio-pixnet_4108_18407_19071_1_content',
+rp: 0.01,
+adUnitSizes: [[300 , 250]],
+bids: [{bidder:'bridgewell',params:{cid:19071}},{bidder:'criteo',params:{zoneId:1609148}},{bidder:'appier',params:{hzid:'mhuTHzOZ'}},{bidder:'ucfunnel',params:{adid:'ad-7728626DAA772246FB98B96966339776'}},{bidder:'appnexus',params:{placementId:'23057783'}},{bidder: 'pubmatic',params: {publisherId: '160596',adSlot: 'Desktop_sidebar1_4234_300x250'}},{bidder:'onemobile',params:{dcn:'8a969178017272c8d4e8cfca07fb00cc',pos:'desktop_sidebar1_4234_300x250_hb'}}],
+snippet: '\u003cscript async src=\"https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2647689032095179\"\n     crossorigin=\"anonymous\"\u003e\u003c/script\u003e\n\u003c!-- [Desktop] Sidebar 300x250 --\u003e\n\u003cins class=\"adsbygoogle\"\n     style=\"display:inline-block;width:300px;height:250px\"\n     data-ad-client=\"ca-pub-2647689032095179\"\n     data-ad-slot=\"2008957148\"\u003e\u003c/ins\u003e\n\u003cscript\u003e\n     (adsbygoogle = window.adsbygoogle || []).push({});\n\u003c/script\u003e'
+});
+</script>
+<div id="scupio-pixnet_4108_18407_19071_1_content" style="width:300px; height:250px;"><iframe id="scupio-pixnet_4108_18407_19071_1_content_frame_registed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" width="300" height="250" src="./saved_resource(7).html"></iframe></div>
+<iframe src="./syncframe.html" width="0" height="0" frameborder="0" title="Criteo GUM iframe" style="border-width: 0px; margin: 0px; display: none;"></iframe></body></html>

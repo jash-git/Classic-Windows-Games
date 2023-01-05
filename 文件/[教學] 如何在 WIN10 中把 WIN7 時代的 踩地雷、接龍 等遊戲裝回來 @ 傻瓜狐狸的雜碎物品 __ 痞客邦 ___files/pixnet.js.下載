@@ -1,0 +1,208 @@
+AviviD.before_page_enable = function() {
+    jQuery(document).ready(function() {
+        if (AviviD.likrTimer != undefined) {
+            AviviD.likrTimer.init();
+            if (typeof AviviD.likrTimer.intervalTrigger_mandatory_before_page === "function") {
+                AviviD.likrTimer.intervalTrigger_mandatory_before_page(AviviD.go_before_page, -1);
+            } else {
+                setTimeout(function() {
+                    AviviD.likrTimer.intervalTrigger_mandatory_before_page(AviviD.go_before_page, -1);
+                }, 100);
+            }
+        } else {
+            setTimeout(function() {
+                AviviD.before_page_enable();
+            }, 100);
+        }
+    });
+}
+AviviD.go_before_page = function(num) {
+    AviviD.auto_bafore = 1;
+    history.go(num);
+}
+AviviD.before_page = function() {
+    console.log('before');
+    if (AviviD.settings.website_type && AviviD.config) {
+        if (AviviD.settings.website_type == '3') {
+            var state = { state: 'avivid_sec' };
+            window.onpopstate = function(event) {
+
+                AviviD.iframe_qs = {
+                    web_id: AviviD.config.web_id,
+                    title_last_watch: AviviD.config.title_last_watch,
+                    title_now_watch: AviviD.config.title_now_watch,
+                    title_exclude: AviviD.config.title_exclude,
+                    website_type: AviviD.config.website_type,
+                    recommend_type: AviviD.config.recommend_type,
+                    model: AviviD.config.model,
+                    z_item: AviviD.config.z_item,
+                    z_close: AviviD.config.z_close,
+                    z_open: AviviD.config.z_open,
+                    open_tab: AviviD.config.open_tab,
+                    standalone: 1
+                };
+                let before_params = JSON.stringify(AviviD.iframe_qs);
+                if (AviviD.int_os_type == '1' || AviviD.int_os_type == '2') {
+                    var summary_click_url = AviviD.before_page_url+"?before_params=" + btoa(encodeURI(before_params));
+                } else {
+                    var summary_click_url = AviviD.before_page_pc_url+"?before_params=" + btoa(encodeURI(before_params));
+                }
+                console.log(event.state);
+                if (event.state != null) {
+                    console.log('ll');
+                    console.log(summary_click_url);
+                    if (JSON.stringify(state) == JSON.stringify(event.state)) {
+                        AviviD.set_cookie('avivid_exit_mode', 0, -1);
+
+                        window.location.replace(summary_click_url);
+                    }
+                    
+                    return;
+                }
+                var module = 'back_page';
+
+                console.log(summary_click_url);
+
+                AviviD.set_cookie('avivid_exit_mode', 0, -1);
+
+                console.log('ii');
+
+                location.replace(summary_click_url);
+
+            }
+
+            var next_state = { state: 'avivid_third' };
+            if (JSON.stringify(next_state) != JSON.stringify(history.state)) {
+                if (AviviD.UAResult.browser.name == 'Facebook' || AviviD.UAResult.browser.name == 'WebKit' || AviviD.UAResult.browser.name == 'Chrome WebView') {
+                    var third_url = document.URL;
+                    if (third_url.includes("?")) {
+                        var sec_url = third_url + '&AviviD_before_temp=1';
+                    } else {
+                        var sec_url = third_url + '?AviviD_before_temp=1';
+                    }
+                    history.replaceState(state, "1", sec_url);
+                    history.pushState(next_state, "2", third_url);  
+                } else {
+                    history.replaceState(state, "", "");
+                    history.pushState(next_state, "", "");  
+                }
+            }
+
+            
+
+        } else if (AviviD.config.open_tab == '1' || document.referrer.includes('www.google')) {//pixnet只開放google流量的猜你喜歡
+            var state = {state:'avivid_sec'};
+            var next_state = {state:'avivid_third'};
+            window.onpopstate = function(event) {
+                if (AviviD.auto_bafore == 1) {
+                    jQuery.ajax({
+                        type: 'POST',
+                        url: 'https://corgi.gaii.ai/api/count_exit_media_recommend.php',
+                        dataType: 'json',
+                        xhrFields:{withCredentials: false},
+                        data: {
+                            web_id: AviviD.web_id,
+                            ip: AviviD.int_os_type,
+                            uuid: '_',
+                            open_tab: '9',
+                            lat:  0,
+                            lon:  0
+                        }
+                    });
+                } else {
+                    jQuery.ajax({
+                        type: 'POST',
+                        url: 'https://corgi.gaii.ai/api/count_exit_media_recommend.php',
+                        dataType: 'json',
+                        xhrFields:{withCredentials: false},
+                        data: {
+                            web_id: AviviD.web_id,
+                            ip: AviviD.int_os_type,
+                            uuid: '_',
+                            open_tab: '6',
+                            lat:  0,
+                            lon:  0
+                        }
+                    });
+                }
+
+                AviviD.iframe_qs = {
+                    web_id: AviviD.web_id,
+                    title_last_watch: AviviD.get_article_title().split(" @ ")[0], //pixnet title特殊處理
+                    title_now_watch: '',
+                    title_exclude: '',
+                    website_type: AviviD.settings.website_type,
+                    recommend_type: '1',
+                    model: 'bottom',
+                    z_item: '10000',
+                    z_close: '10',
+                    z_open: '10000',
+                    open_tab: AviviD.config.open_tab,
+                    standalone: 1,
+                    language:AviviD.settings.language,
+                };
+                let before_params = JSON.stringify(AviviD.iframe_qs);
+                if (AviviD.int_os_type == '1' || AviviD.int_os_type == '2') {
+                    var summary_click_url = AviviD.media_before_page_url+"?before_params=" + btoa(encodeURI(before_params)) + "&AviviD_uuid=" + AviviD.uuid;
+                } else {
+                    var summary_click_url = AviviD.media_before_page_pc_url+"?before_params=" + btoa(encodeURI(before_params));
+                }
+
+                if(event.state != null)
+                {
+                    console.log('ll');
+                    console.log(summary_click_url);
+                    
+                    if(JSON.stringify(state) == JSON.stringify(event.state)){
+                        AviviD.set_cookie('avivid_exit_mode',0,-1);
+                        setTimeout(function () { window.location.replace(summary_click_url); }, 10);
+                    }
+                    
+                    return;
+                }
+            }
+            
+            if( JSON.stringify(next_state) != JSON.stringify(history.state) ){
+                if (AviviD.UAResult.browser.name == 'Facebook' || AviviD.UAResult.browser.name == 'WebKit' || AviviD.UAResult.browser.name == 'Chrome WebView') {
+                    var third_url = document.URL;
+                    if (third_url.includes("?")) {
+                        var sec_url = third_url + '&AviviD_before_temp=1';
+                    } else {
+                        var sec_url = third_url + '?AviviD_before_temp=1';
+                    }
+                    history.replaceState(state, "1", sec_url);
+                    history.pushState(next_state, "2", third_url);  
+                } else {
+                    history.replaceState(state, "", "");
+                    history.pushState(next_state, "", "");  
+                }
+            }
+            
+            if (AviviD.UAResult.browser.name == 'Mobile Safari') {
+                AviviD.before_page_enable();
+            }
+        }
+    } else {
+        setTimeout(function() { AviviD.before_page() }, 1000);
+    }
+}
+if (document.domain == 'pixhsiao.pixnet.net') {
+    jQuery.ajax({
+        type: 'POST',
+        url: 'https://kangaroo.likr.com.tw/api/pixnet_browser_api.php',
+        data: {
+        'browser_name': AviviD.UAResult.browser.name,
+        'referrer_url':document.referrer,
+        },
+        xhrFields: {
+            withCredentials: false
+        },
+        success: function(result) {
+            console.log(result);
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            console.log(xhr.status);
+            console.log(thrownError);
+        }
+    });
+}
